@@ -1,0 +1,1010 @@
+/* ==========================================================================
+   The Monograph Folio — Design System & Stylesheet
+   Pure Monochromatic Editorial Architecture (Zero-Scroll Single Viewport)
+   ========================================================================== */
+
+:root,
+[data-theme="dark"] {
+  --bg: #090a0d;
+  --bg-elevated: #111317;
+  --surface: #16181f;
+  --surface-hover: #1e212b;
+  --surface-active: #242834;
+  --border: #232732;
+  --border-strong: #333847;
+  --text: #f5f5f3;
+  --text-muted: #9ba1b0;
+  --text-faint: #858ca0;
+  --text-inverse: #090a0d;
+  --accent-live: #22c55e;
+  --selection-bg: #f5f5f3;
+  --selection-color: #090a0d;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-pill: 9999px;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-sans: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --header-height: 58px;
+  --footer-height: 52px;
+}
+
+[data-theme="light"] {
+  --bg: #f7f7f5;
+  --bg-elevated: #ecece7;
+  --surface: #e2e2dc;
+  --surface-hover: #d7d7d0;
+  --surface-active: #cccccc;
+  --border: #d4d4cd;
+  --border-strong: #b8b8ae;
+  --text: #090a0d;
+  --text-muted: #535865;
+  --text-faint: #626776;
+  --text-inverse: #f7f7f5;
+  --accent-live: #16a34a;
+  --selection-bg: #090a0d;
+  --selection-color: #f7f7f5;
+}
+
+/* Base Reset & Box Sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-color);
+}
+
+:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* Custom Minimal Cursor Followers */
+.cursor-ring,
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease;
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--text-faint);
+  transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.22s ease;
+}
+
+.cursor-ring.is-hovering {
+  width: 48px;
+  height: 48px;
+  border-color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+[data-theme="light"] .cursor-ring.is-hovering {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.cursor-dot {
+  width: 4px;
+  height: 4px;
+  background-color: var(--text);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-ring,
+  .cursor-dot {
+    display: none;
+  }
+}
+
+/* Architectural Hairline Rules */
+.hairline {
+  position: absolute;
+  background-color: var(--border);
+  z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+.hairline-bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+.hairline-top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+.hairline-vertical {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  position: relative;
+  background-color: var(--border);
+}
+
+/* Main Layout Grid */
+.monograph-stage {
+  width: 100vw;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: var(--bg);
+}
+
+/* ==========================================================================
+   Header: Masthead
+   ========================================================================== */
+
+.masthead {
+  height: var(--header-height);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  flex-shrink: 0;
+  background: var(--bg);
+}
+
+.masthead-identity .brand-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-name {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.brand-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.masthead-status .status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.status-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-live);
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.theme-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.theme-toggle:hover .theme-pill {
+  border-color: var(--border-strong);
+  background-color: var(--surface-hover);
+}
+
+.theme-knob {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text);
+  transition: transform 0.25s ease;
+}
+
+/* ==========================================================================
+   Main Folio Workspace (Two Columns, Zero-Scroll)
+   ========================================================================== */
+
+.folio-workspace {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.25fr 1px 0.85fr;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left Column: Primary Editorial & Specimen Bay */
+.folio-primary {
+  padding: 32px 40px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+}
+
+.primary-headline-block {
+  flex-shrink: 0;
+}
+
+.primary-title {
+  font-family: var(--font-serif);
+  font-size: clamp(38px, 4.4vw, 54px);
+  line-height: 1.02;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.primary-title .title-line {
+  display: block;
+}
+
+.primary-summary {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 580px;
+  margin-bottom: 20px;
+}
+
+.primary-summary strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.primary-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.action-primary {
+  background-color: var(--text);
+  color: var(--text-inverse);
+  border: 1px solid var(--text);
+}
+
+.action-primary:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.action-secondary {
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
+
+.action-secondary:hover {
+  background-color: var(--surface-hover);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.btn-copy-tag {
+  color: var(--text-faint);
+  font-size: 11.5px;
+  transition: color 0.2s ease;
+}
+
+.action-secondary:hover .btn-copy-tag {
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Specimen Bay (Live Interactive Exhibit Stage)
+   ========================================================================== */
+
+.specimen-bay {
+  flex: 1;
+  position: relative;
+  min-height: 280px;
+  margin-top: 20px;
+}
+
+.specimen-exhibit {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+  transform: translateY(12px);
+}
+
+.specimen-exhibit.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  z-index: 2;
+}
+
+/* Device Mockup: iPhone Titanium Chassis Frame */
+.specimen-hardware {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iphone-frame {
+  width: 172px;
+  height: 312px;
+  background: linear-gradient(135deg, #2b2e36 0%, #15171d 50%, #22252c 100%);
+  border-radius: 34px;
+  padding: 6px;
+  position: relative;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  border: 1px solid #363b46;
+}
+
+[data-theme="light"] .iphone-frame {
+  background: linear-gradient(135deg, #d8d9de 0%, #f0f1f5 50%, #caced5 100%);
+  border: 1px solid #bbbec7;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.1),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+.device-bezel {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  border-radius: 28px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.dynamic-island {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 13px;
+  background: #000;
+  border-radius: 12px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 6px;
+}
+
+.island-camera {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #111422;
+  box-shadow: inset 0 0 2px #2a3556;
+}
+
+.screen-viewport {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+.device-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Automotive Screen Frame (Exhibit 02) */
+.automotive-screen-frame {
+  width: 250px;
+  height: 180px;
+  background: #181a20;
+  border: 1px solid #2d323e;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.automotive-bezel {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.automotive-media {
+  object-fit: cover;
+}
+
+.screen-glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Blueprint Exhibition Card (Exhibits 03 & 04) */
+.specimen-graphic-stage {
+  width: 230px;
+  height: 200px;
+}
+
+.blueprint-card {
+  width: 100%;
+  height: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.blueprint-grid-fx {
+  display: none;
+}
+
+.blueprint-code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.blueprint-spec {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+
+.blueprint-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.bp-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.bp-val {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Specimen Meta Column */
+.specimen-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 480px;
+}
+
+.meta-header {
+  margin-bottom: 10px;
+}
+
+.meta-tag {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.meta-title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.meta-links {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.meta-link {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-muted);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.18s ease;
+}
+
+.meta-link:hover {
+  color: var(--text);
+}
+
+.link-arrow {
+  font-size: 11.5px;
+  transition: transform 0.18s ease;
+}
+
+.meta-link:hover .link-arrow {
+  transform: translate(2px, -2px);
+}
+
+.meta-description {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.meta-description strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.meta-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.stack-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Right Column: Curated Experience Ledger & Select Rail
+   ========================================================================== */
+
+.folio-ledger {
+  padding: 32px 36px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--bg);
+  overflow: hidden;
+}
+
+.ledger-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+
+.ledger-header-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.ledger-header-period {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+/* Rail Rows */
+.ledger-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  justify-content: center;
+}
+
+.ledger-row {
+  display: flex;
+  align-items: stretch;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.ledger-row:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+  transform: translateX(-2px);
+}
+
+.ledger-row.is-active {
+  background: var(--surface-active);
+  border-color: var(--text);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .ledger-row.is-active {
+  background: #fff;
+  border-color: var(--text);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.row-indicator {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.ledger-row.is-active .row-indicator {
+  background-color: var(--text);
+}
+
+.row-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row-index {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.ledger-row.is-active .row-index {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.row-role-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.current-tag {
+  color: var(--accent-live);
+  font-weight: 500;
+}
+
+.row-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.row-sub {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.row-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.row-tech {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+
+.ledger-row.is-active .row-tech {
+  color: var(--text-muted);
+}
+
+.row-arrow {
+  font-size: 12px;
+  color: var(--text-faint);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.ledger-row:hover .row-arrow,
+.ledger-row.is-active .row-arrow {
+  transform: translateX(3px);
+  color: var(--text);
+}
+
+/* Skills Footnote Box */
+.ledger-skills-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-top: 12px;
+}
+
+.skills-box-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.skills-box-text {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.skills-box-text strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Footer: Anchored Base Bar
+   ========================================================================== */
+
+.anchored-footer {
+  height: var(--footer-height);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  flex-shrink: 0;
+  background: var(--bg);
+}
+
+.footer-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.footer-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--text-faint);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-link {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-muted);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: var(--text);
+}
+
+.copyright-mark {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  html,
+  body {
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .monograph-stage {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .folio-workspace {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    overflow: visible;
+  }
+
+  .hairline-vertical {
+    display: none;
+  }
+
+  .folio-primary {
+    padding: 32px 24px;
+  }
+
+  .specimen-bay {
+    position: relative;
+    min-height: 400px;
+  }
+
+  .specimen-exhibit {
+    position: relative;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    display: none;
+  }
+
+  .specimen-exhibit.is-active {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .specimen-hardware {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .iphone-frame {
+    width: 150px;
+    height: 270px;
+  }
+
+  .folio-ledger {
+    padding: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .anchored-footer {
+    padding: 0 24px;
+    flex-direction: column;
+    height: auto;
+    padding: 20px 24px;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

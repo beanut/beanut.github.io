@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+    <script>
+    // URL Flag Gate: routes to redesigned Monograph Folio when flag is present
+    (function () {
+      const q = new URLSearchParams(window.location.search);
+      if (
+        q.has("folio") ||
+        q.has("monograph") ||
+        q.has("redesign") ||
+        q.get("v") === "folio" ||
+        q.get("v") === "2" ||
+        q.get("design") === "monograph"
+      ) {
+        window.location.replace("folio.html" + window.location.search);
+      }
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bernard Lim — Bernard ❤️ Software Engineering</title>
+  <meta name="description" content="Bernard Lim — Software Engineering at the University of Waterloo." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Subtle custom cursor ring -->
+  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <!-- Full-viewport emoji shatter explosion layer -->
+  <div class="viewport-shards-layer" id="viewport-shards-layer" aria-hidden="true"></div>
+
+  <div class="viewport-grid">
+    <!-- Top Full-Width Header -->
+    <header class="top-bar">
+      <div class="line-mask">
+        <span class="brand reveal-item">Bernard Lim</span>
+      </div>
+
+      <div class="controls">
+        <button class="theme-btn magnetic" id="theme-toggle" type="button" aria-label="Toggle monochrome theme">
+          <span class="theme-indicator"></span>
+          <span class="theme-label" id="theme-label">Dark</span>
+        </button>
+      </div>
+      <div class="rule-h rule-bottom"></div>
+    </header>
+
+    <!-- Main Full-Viewport Hero -->
+    <main class="hero-stage">
+      <!-- Left / Primary Editorial Column -->
+      <section class="hero-primary" aria-label="Introduction">
+        <div class="bg-glyph" id="bg-glyph" aria-hidden="true">BL</div>
+
+        <!-- Default Hero Title Section -->
+        <div class="hero-title-group" id="hero-title-group">
+          <h1 class="headline" id="hero-headline" aria-label="Bernard loves software engineering!">
+            <span class="line-mask headline-mask">
+              <span class="headline-line reveal-line">Bernard <button class="title-emoji-btn magnetic" id="title-emoji-slot" type="button" aria-label="Current emoji: Love. Click to cycle emoji." title="Click to rotate emoji"><span class="title-emoji-fx" aria-hidden="true"></span><span class="title-emoji-particles" id="title-emoji-particles" aria-hidden="true"></span><span class="title-emoji-char" id="title-emoji">❤️</span></button> software <em class="serif">engineering!</em></span>
+            </span>
+          </h1>
+
+          <div class="subhead-wrap line-mask">
+            <p class="discipline reveal-item">Software Engineering @ University of Waterloo</p>
+          </div>
+
+          <div class="hero-action-wrap">
+            <a
+              href="resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hero-resume-btn magnetic"
+              aria-label="View Resume (PDF opens in a new tab)"
+            >
+              <span>View Resume</span>
+              <span class="btn-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Faire Hover Showcase (iPhone 18 Pro Frame + Description) -->
+        <div class="faire-showcase" id="faire-showcase" aria-hidden="true">
+          <div class="iphone-mockup" id="iphone-mockup">
+            <!-- Left & Right Titanium Hardware Buttons -->
+            <div class="iphone-btn iphone-btn-action"></div>
+            <div class="iphone-btn iphone-btn-vol-up"></div>
+            <div class="iphone-btn iphone-btn-vol-down"></div>
+            <div class="iphone-btn iphone-btn-power"></div>
+            <div class="iphone-btn iphone-btn-camera-control"></div>
+
+            <!-- iPhone 18 Pro Brushed Titanium Chassis -->
+            <div class="iphone-chassis">
+              <div class="antenna-band antenna-top-left"></div>
+              <div class="antenna-band antenna-top-right"></div>
+              <div class="antenna-band antenna-bottom-left"></div>
+              <div class="antenna-band antenna-bottom-right"></div>
+
+              <!-- Ultra-Thin Contoured Display Bezel -->
+              <div class="iphone-bezel">
+                <div class="earpiece-slit"></div>
+                <div class="iphone-screen">
+                  <!-- iPhone 18 Pro Dynamic Island + TrueDepth Camera Lens -->
+                  <div class="dynamic-island" aria-hidden="true">
+                    <span class="island-sensor"></span>
+                    <span class="island-camera"></span>
+                  </div>
+                  <video
+                    id="faire-video"
+                    class="iphone-video"
+                    src="faire_ios.MP4"
+                    muted
+                    loop
+                    playsinline
+                    preload="auto"
+                  ></video>
+                </div>
+              </div>
+            </div>
+
+            <a
+              href="https://apps.apple.com/us/app/faire-wholesale/id1413340491"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="iphone-caption magnetic"
+              aria-label="Faire Wholesale for iOS on the App Store (opens in a new tab)"
+            >
+              <span>Faire Wholesale for iOS</span>
+              <span class="caption-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <div class="faire-copy" id="faire-copy">
+            <span class="faire-eyebrow">01 // Faire — iOS Engineering</span>
+            <p class="faire-desc">
+              At <strong>Faire</strong>, I build customer-facing features on the wholesale marketplace iOS app using <strong>Swift</strong> and <strong>SwiftUI</strong>, and work with <strong>Bazel</strong> build targets and dependencies to keep iOS builds fast and reproducible.
+            </p>
+            <div class="faire-tags">
+              <span>Swift</span>
+              <span>SwiftUI</span>
+              <span>Bazel</span>
+              <span>iOS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ford Hover Showcase (Blended Infotainment Image + Description) -->
+        <div class="ford-showcase" id="ford-showcase" aria-hidden="true">
+          <div class="ford-visual" id="ford-visual">
+            <div class="ford-image-wrap">
+              <img
+                src="ford_infotainment.png"
+                alt="Ford SYNC infotainment system running Apple CarPlay"
+                class="ford-image"
+              />
+              <div class="ford-edge-blur ford-edge-left" aria-hidden="true"></div>
+              <div class="ford-edge-blur ford-edge-right" aria-hidden="true"></div>
+            </div>
+
+            <a
+              href="https://www.ford.com/technology/sync/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="iphone-caption ford-caption magnetic"
+              aria-label="Ford SYNC Infotainment System (opens in a new tab)"
+            >
+              <span>Ford SYNC &amp; CarPlay</span>
+              <span class="caption-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <div class="faire-copy ford-copy" id="ford-copy">
+            <span class="faire-eyebrow">02 // Ford — Android Automotive</span>
+            <p class="faire-desc">
+              At <strong>Ford</strong>, I engineered <strong>CarPlay</strong> and <strong>Android Auto</strong> features for infotainment systems using <strong>Kotlin</strong>, <strong>Java</strong>, and <strong>RROs</strong>.
+            </p>
+            <div class="faire-tags">
+              <span>Kotlin</span>
+              <span>Java</span>
+              <span>Android Automotive</span>
+              <span>CarPlay</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vertical Divider -->
+      <div class="rule-v" aria-hidden="true"></div>
+
+      <!-- Right / Minimalist Index Column -->
+      <aside class="hero-index" aria-label="Selected index">
+        <div class="index-header line-mask">
+          <span class="reveal-item">Experiences</span>
+        </div>
+
+        <div class="index-list">
+          <div class="index-row is-current" id="faire-row" data-glyph="01">
+            <div class="rule-h rule-top"></div>
+            <div class="row-inner">
+              <span class="index-num">01</span>
+              <span class="index-label">
+                <span class="current-pill">
+                  <span class="live-dot" aria-hidden="true"></span>Current
+                </span>
+              </span>
+              <span class="index-value">
+                <a href="https://www.faire.com" target="_blank" rel="noopener noreferrer" class="inline-link current-link">Faire ↗</a>
+                <span class="role-sub current-sub">iOS Engineering</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="index-row" id="ford-row" data-glyph="02">
+            <div class="rule-h rule-top"></div>
+            <div class="row-inner">
+              <span class="index-num">02</span>
+              <span class="index-label">Previous</span>
+              <span class="index-value">
+                <a href="https://www.ford.com" target="_blank" rel="noopener noreferrer" class="inline-link">Ford Motor Company ↗</a>
+                <span class="role-sub">Android Automotive Software Engineering</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="index-row" data-glyph="03">
+            <div class="rule-h rule-top"></div>
+            <div class="row-inner">
+              <span class="index-num">03</span>
+              <span class="index-label">Previous</span>
+              <span class="index-value">
+                <a href="https://www.prioritydynamics.com" target="_blank" rel="noopener noreferrer" class="inline-link">Priority Dynamics ↗</a>
+                <span class="role-sub">Software Engineering</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="index-row" data-glyph="04">
+            <div class="rule-h rule-top"></div>
+            <div class="row-inner">
+              <span class="index-num">04</span>
+              <span class="index-label">Featured</span>
+              <span class="index-value">
+                <a href="https://apps.apple.com/ca/app/elementsar/id6451120399" target="_blank" rel="noopener noreferrer" class="inline-link">ElementsAR (iOS App Store) ↗</a>
+                <span class="role-sub">Apple WWDC22 Swift Student Challenge Winner</span>
+              </span>
+            </div>
+            <div class="rule-h rule-bottom"></div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Bottom Full-Width Bar -->
+    <footer class="bottom-bar">
+      <div class="rule-h rule-top"></div>
+
+      <nav class="links" aria-label="Contact and profiles">
+        <div class="email-group">
+          <a href="mailto:btelim@uwaterloo.ca" class="link-item magnetic">btelim@uwaterloo.ca</a>
+          <button type="button" class="copy-trigger magnetic" id="copy-email" data-email="btelim@uwaterloo.ca">
+            [Copy]
+          </button>
+        </div>
+
+        <div class="social-group">
+          <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="link-item magnetic">Resume ↗</a>
+          <a href="https://github.com/beanut" target="_blank" rel="noopener noreferrer" class="link-item magnetic">GitHub ↗</a>
+          <a href="https://linkedin.com/in/bernard-lte/" target="_blank" rel="noopener noreferrer" class="link-item magnetic">LinkedIn ↗</a>
+          <a href="https://apps.apple.com/ca/app/elementsar/id6451120399" target="_blank" rel="noopener noreferrer" class="link-item magnetic">App Store ↗</a>
+        </div>
+      </nav>
+
+      <div class="footnote line-mask">
+        <span class="reveal-item">© 2026 Bernard Lim</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

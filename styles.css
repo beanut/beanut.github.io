@@ -1,0 +1,1107 @@
+:root,
+[data-theme="dark"] {
+  --bg: #080808;
+  --surface: #111111;
+  --surface-hover: #161616;
+  --text: #f5f5f5;
+  --grey-1: #c2c2c2;
+  --grey-2: #7a7a7a;
+  --grey-3: #3d3d3d;
+  --border: #242424;
+  --glyph: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="light"] {
+  --bg: #f6f6f6;
+  --surface: #ececec;
+  --surface-hover: #e4e4e4;
+  --text: #0c0c0c;
+  --grey-1: #383838;
+  --grey-2: #737373;
+  --grey-3: #b5b5b5;
+  --border: #d6d6d6;
+  --glyph: rgba(0, 0, 0, 0.035);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+::selection {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* Custom Monochrome Cursor Follower */
+.cursor-ring,
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--grey-3);
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+}
+
+.cursor-ring.is-active {
+  width: 52px;
+  height: 52px;
+  border-color: var(--text);
+}
+
+.cursor-dot {
+  width: 4px;
+  height: 4px;
+  background: var(--text);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-ring,
+  .cursor-dot {
+    display: none;
+  }
+}
+
+/* Full-Viewport Edge-to-Edge Grid */
+.viewport-grid {
+  width: 100vw;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  position: relative;
+}
+
+/* Animated Hairline Rules */
+.rule-h {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--border);
+  transform-origin: left center;
+}
+
+.rule-top {
+  top: 0;
+}
+
+.rule-bottom {
+  bottom: 0;
+}
+
+.rule-v {
+  width: 1px;
+  height: 100%;
+  background-color: var(--border);
+  transform-origin: center top;
+}
+
+.line-mask {
+  overflow: hidden;
+  display: inline-flex;
+}
+
+/* Top Full-Width Header */
+.top-bar {
+  position: relative;
+  width: 100%;
+  padding: 1.35rem clamp(1.5rem, 3.5vw, 3.5rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+}
+
+.brand {
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 400;
+}
+
+.discipline {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--grey-2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.controls {
+  justify-self: end;
+}
+
+.theme-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.38rem 0.75rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.theme-btn:hover {
+  border-color: var(--text);
+  background-color: var(--surface);
+}
+
+.theme-indicator {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, var(--text) 50%, transparent 50%);
+  border: 1px solid var(--text);
+}
+
+/* Main Hero Stage (Full Width Split Grid) */
+.hero-stage {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1.35fr 1px 1fr;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+/* Left Primary Column */
+.hero-primary {
+  position: relative;
+  padding: clamp(2rem, 5vh, 4.5rem) clamp(1.5rem, 3.5vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.bg-glyph {
+  position: absolute;
+  right: -0.04em;
+  bottom: -0.14em;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(14rem, 28vw, 30rem);
+  line-height: 0.8;
+  color: var(--glyph);
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.eyebrow-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--grey-2);
+}
+
+.hero-title-group {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.headline {
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(2.4rem, 5.1vw, 6.2rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: var(--text);
+}
+
+.headline .line-mask {
+  display: block;
+  padding-bottom: 0.08em;
+  transition: overflow 0.25s ease;
+}
+
+.headline .line-mask.is-revealed {
+  overflow: visible;
+}
+
+.headline-line {
+  display: block;
+  will-change: transform;
+}
+
+/* Interactive Emoji Button within Title */
+.title-emoji-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: transparent;
+  border: none;
+  padding: 0 0.08em;
+  margin: 0 0.04em;
+  font-family: inherit;
+  font-size: 0.94em;
+  line-height: 1;
+  vertical-align: -0.04em;
+  cursor: pointer;
+  color: inherit;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  perspective: 700px;
+  transform-style: preserve-3d;
+  touch-action: manipulation;
+}
+
+.title-emoji-btn:focus-visible {
+  outline: 2px dashed var(--text);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.title-emoji-char {
+  display: inline-block;
+  line-height: 1;
+  transform-origin: center center;
+  will-change: transform, opacity, filter;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.22));
+  pointer-events: none;
+}
+
+[data-theme="light"] .title-emoji-char {
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.12));
+}
+
+.title-emoji-fx {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.35em;
+  height: 1.35em;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: radial-gradient(circle, var(--text) 0%, transparent 72%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Full-Viewport Emoji Shatter & Explosion Layer */
+.viewport-shards-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.title-emoji-particles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 5;
+}
+
+.viewport-shard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  will-change: transform, opacity;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.45));
+}
+
+[data-theme="light"] .viewport-shard {
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.22));
+}
+
+.viewport-spark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  border-radius: 50%;
+  backface-visibility: hidden;
+}
+
+.serif {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.08em;
+  letter-spacing: -0.01em;
+}
+
+/* Hero Action CTA */
+.hero-action-wrap {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+.hero-resume-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 1.3rem;
+  background-color: var(--text);
+  color: var(--bg);
+  border: 1px solid var(--text);
+  border-radius: 999px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.14);
+  transition: background-color 0.22s ease,
+              color 0.22s ease,
+              border-color 0.22s ease,
+              box-shadow 0.22s ease;
+  will-change: transform;
+}
+
+.hero-resume-btn:hover {
+  background-color: transparent;
+  color: var(--text);
+  border-color: var(--text);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.22);
+}
+
+.hero-resume-btn:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+}
+
+.hero-resume-btn .btn-arrow {
+  display: inline-block;
+  font-size: 0.85rem;
+  line-height: 1;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-resume-btn:hover .btn-arrow {
+  transform: translate(2.5px, -2.5px);
+}
+
+/* Faire Hover Showcase (iPhone Frame + Description) */
+.faire-showcase {
+  position: absolute;
+  inset: 0;
+  padding: clamp(1.5rem, 4vh, 3rem) clamp(1.5rem, 3.5vw, 3.5rem);
+  display: flex;
+  align-items: center;
+  gap: clamp(1.75rem, 3.2vw, 3.5rem);
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.faire-showcase.is-visible {
+  pointer-events: auto;
+}
+
+.iphone-mockup {
+  position: relative;
+  height: clamp(310px, 66dvh, 550px);
+  aspect-ratio: 1206 / 2622;
+  flex-shrink: 0;
+  will-change: transform, opacity;
+}
+
+/* iPhone 18 Pro Brushed Titanium Outer Chassis */
+.iphone-chassis {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 17.5% / 8.05%;
+  padding: 2.5px;
+  background: linear-gradient(
+    135deg,
+    #707075 0%,
+    #38383c 22%,
+    #1f1f22 50%,
+    #4c4c52 80%,
+    #28282c 100%
+  );
+  box-shadow:
+    0 28px 65px rgba(0, 0, 0, 0.65),
+    0 4px 16px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 0.75px rgba(255, 255, 255, 0.28);
+}
+
+[data-theme="light"] .iphone-chassis {
+  box-shadow:
+    0 26px 56px rgba(0, 0, 0, 0.22),
+    0 4px 14px rgba(0, 0, 0, 0.12),
+    inset 0 0 0 0.75px rgba(255, 255, 255, 0.35);
+}
+
+/* Antenna Bands */
+.antenna-band {
+  position: absolute;
+  background: rgba(15, 15, 17, 0.75);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.antenna-top-left,
+.antenna-top-right {
+  top: 8.5%;
+  width: 3px;
+  height: 2px;
+}
+
+.antenna-bottom-left,
+.antenna-bottom-right {
+  bottom: 8.5%;
+  width: 3px;
+  height: 2px;
+}
+
+.antenna-top-left,
+.antenna-bottom-left {
+  left: 0;
+}
+
+.antenna-top-right,
+.antenna-bottom-right {
+  right: 0;
+}
+
+/* iPhone 18 Pro Ultra-Thin Display Bezel */
+.iphone-bezel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 16.6% / 7.65%;
+  padding: 4.5px;
+  background: #050506;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.earpiece-slit {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16%;
+  height: 1.5px;
+  border-radius: 999px;
+  background: #18181b;
+  z-index: 4;
+}
+
+.iphone-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 15.2% / 7.05%;
+  overflow: hidden;
+  background: #000000;
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.1);
+}
+
+/* iPhone 18 Pro Dynamic Island + Optical Lens */
+.dynamic-island {
+  position: absolute;
+  top: 1.45%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36.2%;
+  height: 4.25%;
+  background: #000000;
+  border-radius: 999px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 7%;
+  box-shadow:
+    0 0 0 0.5px rgba(255, 255, 255, 0.07),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.island-sensor {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #111115 35%, #050507 100%);
+}
+
+.island-camera {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    #3a3a44 0%,
+    #17171d 45%,
+    #070709 80%,
+    #25252c 100%
+  );
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.iphone-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* iPhone 18 Pro Titanium Side Buttons & Camera Control */
+.iphone-btn {
+  position: absolute;
+  background: linear-gradient(180deg, #5a5a60 0%, #2c2c30 50%, #48484e 100%);
+  z-index: 0;
+}
+
+.iphone-btn-action {
+  left: -2px;
+  top: 16.5%;
+  width: 2.5px;
+  height: 4.2%;
+  border-radius: 2px 0 0 2px;
+}
+
+.iphone-btn-vol-up {
+  left: -2.2px;
+  top: 23.5%;
+  width: 2.5px;
+  height: 7.2%;
+  border-radius: 2px 0 0 2px;
+}
+
+.iphone-btn-vol-down {
+  left: -2.2px;
+  top: 32.2%;
+  width: 2.5px;
+  height: 7.2%;
+  border-radius: 2px 0 0 2px;
+}
+
+.iphone-btn-power {
+  right: -2.2px;
+  top: 25.5%;
+  width: 2.5px;
+  height: 10.5%;
+  border-radius: 0 2px 2px 0;
+}
+
+.iphone-btn-camera-control {
+  right: -1.2px;
+  top: 60%;
+  width: 1.5px;
+  height: 7.5%;
+  border-radius: 0 1px 1px 0;
+  background: linear-gradient(180deg, #3a3a40 0%, #1c1c20 50%, #3a3a40 100%);
+}
+
+/* iPhone Video Caption Link */
+.iphone-caption {
+  position: absolute;
+  top: calc(100% + 1.1rem);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: max-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grey-2);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  z-index: 5;
+}
+
+.iphone-caption:hover {
+  color: var(--text);
+  border-bottom-color: var(--grey-3);
+}
+
+.iphone-caption .caption-arrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  line-height: 1;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.iphone-caption:hover .caption-arrow {
+  transform: translate(2px, -2px);
+}
+
+/* Faire Description Block */
+.faire-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  max-width: 38ch;
+  will-change: transform, opacity;
+}
+
+.faire-eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--grey-2);
+}
+
+.faire-desc {
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--grey-1);
+  letter-spacing: -0.01em;
+}
+
+.faire-desc strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.faire-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.25rem;
+}
+
+.faire-tags span {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--grey-1);
+}
+
+/* Ford Hover Showcase (Side-Blurred Infotainment Visual + Description) */
+.ford-showcase {
+  position: absolute;
+  inset: 0;
+  padding: clamp(1.5rem, 4vh, 3rem) clamp(1.5rem, 3.5vw, 3.5rem);
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 2.8vw, 3rem);
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.ford-showcase.is-visible {
+  pointer-events: auto;
+}
+
+.ford-visual {
+  position: relative;
+  width: clamp(250px, 28vw, 410px);
+  aspect-ratio: 4 / 3;
+  flex-shrink: 0;
+  will-change: transform, opacity;
+}
+
+.ford-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  -webkit-mask-image:
+    linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.35) 7%,
+      rgba(0, 0, 0, 0.85) 16%,
+      #000000 26%,
+      #000000 74%,
+      rgba(0, 0, 0, 0.85) 84%,
+      rgba(0, 0, 0, 0.35) 93%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.75) 6%,
+      #000000 14%,
+      #000000 86%,
+      rgba(0, 0, 0, 0.75) 94%,
+      transparent 100%
+    );
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.35) 7%,
+      rgba(0, 0, 0, 0.85) 16%,
+      #000000 26%,
+      #000000 74%,
+      rgba(0, 0, 0, 0.85) 84%,
+      rgba(0, 0, 0, 0.35) 93%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.75) 6%,
+      #000000 14%,
+      #000000 86%,
+      rgba(0, 0, 0, 0.75) 94%,
+      transparent 100%
+    );
+  mask-composite: intersect;
+}
+
+.ford-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.03);
+}
+
+.ford-edge-blur {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28%;
+  pointer-events: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.ford-edge-left {
+  left: 0;
+  background: linear-gradient(to right, var(--bg) 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, #000000 0%, rgba(0, 0, 0, 0.6) 55%, transparent 100%);
+  mask-image: linear-gradient(to right, #000000 0%, rgba(0, 0, 0, 0.6) 55%, transparent 100%);
+}
+
+.ford-edge-right {
+  right: 0;
+  background: linear-gradient(to left, var(--bg) 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, #000000 0%, rgba(0, 0, 0, 0.6) 55%, transparent 100%);
+  mask-image: linear-gradient(to left, #000000 0%, rgba(0, 0, 0, 0.6) 55%, transparent 100%);
+}
+
+.ford-copy {
+  max-width: 36ch;
+}
+
+/* Right Minimalist Index Column */
+.hero-index {
+  padding: clamp(2rem, 5vh, 4.5rem) clamp(1.5rem, 3.5vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.index-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--grey-2);
+}
+
+.index-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.index-row {
+  position: relative;
+  padding: clamp(0.95rem, 2.2vh, 1.45rem) 0;
+  transition: background-color 0.25s ease;
+}
+
+.index-row.is-current {
+  padding: clamp(1.3rem, 2.8vh, 1.95rem) 1.15rem;
+  background-color: var(--surface);
+  border-left: 2px solid var(--text);
+}
+
+.index-row.is-current .index-num {
+  color: var(--text);
+}
+
+.current-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background-color: var(--text);
+  color: var(--bg);
+  font-weight: 500;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+}
+
+.live-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--bg);
+  animation: mono-pulse 2.2s infinite ease-in-out;
+}
+
+@keyframes mono-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.current-link {
+  font-size: clamp(1.2rem, 1.55vw, 1.5rem);
+  font-weight: 500;
+  border-bottom-color: var(--text);
+}
+
+.role-sub {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--grey-2);
+}
+
+.current-sub {
+  color: var(--grey-1);
+  font-size: 0.75rem;
+}
+
+.row-inner {
+  display: grid;
+  grid-template-columns: 34px 104px 1fr;
+  align-items: baseline;
+  gap: 0.75rem;
+  will-change: transform;
+}
+
+.index-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  color: var(--grey-3);
+  transition: color 0.25s ease;
+}
+
+.index-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--grey-2);
+}
+
+.index-value {
+  font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+  color: var(--text);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.index-row:hover .index-num {
+  color: var(--text);
+}
+
+.muted {
+  color: var(--grey-2);
+  font-weight: 300;
+}
+
+.inline-link {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--grey-3);
+  padding-bottom: 2px;
+  transition: border-color 0.2s ease;
+}
+
+.inline-link:hover {
+  border-color: var(--text);
+}
+
+/* Bottom Full-Width Footer Bar */
+.bottom-bar {
+  position: relative;
+  width: 100%;
+  padding: 1.35rem clamp(1.5rem, 3.5vw, 3.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.76rem;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2.25rem;
+}
+
+.email-group,
+.social-group {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.link-item {
+  color: var(--grey-1);
+  text-decoration: none;
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+
+.link-item:hover {
+  color: var(--text);
+}
+
+.copy-trigger {
+  background: none;
+  border: none;
+  color: var(--grey-2);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  cursor: pointer;
+  margin-left: -0.5rem;
+  transition: color 0.2s ease;
+}
+
+.copy-trigger:hover {
+  color: var(--text);
+}
+
+.footnote {
+  color: var(--grey-2);
+  letter-spacing: 0.04em;
+}
+
+/* Responsive Single-Screen Adaptation */
+@media (max-width: 960px) {
+  .hero-stage {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1px auto;
+  }
+
+  .rule-v {
+    width: 100%;
+    height: 1px;
+  }
+
+  .index-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .row-inner {
+    grid-template-columns: 28px 82px 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-resume-btn {
+    padding: 0.52rem 1.05rem;
+    font-size: 0.72rem;
+  }
+
+  .iphone-caption {
+    font-size: 0.64rem;
+    top: calc(100% + 0.75rem);
+  }
+
+  .bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .links {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+}
