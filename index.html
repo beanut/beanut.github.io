@@ -133,7 +133,10 @@
           </div>
 
           <div class="faire-copy" id="faire-copy">
-            <span class="faire-eyebrow">01 // Faire — iOS Engineering</span>
+            <div class="showcase-eyebrow-row">
+              <span class="faire-eyebrow">01 // Faire — iOS Engineering</span>
+              <button type="button" class="showcase-close-btn" data-close-showcase aria-label="Close showcase and return to headline">← Intro</button>
+            </div>
             <p class="faire-desc">
               At <strong>Faire</strong>, I build customer-facing features on the wholesale marketplace iOS app using <strong>Swift</strong> and <strong>SwiftUI</strong>, and work with <strong>Bazel</strong> build targets and dependencies to keep iOS builds fast and reproducible.
             </p>
@@ -172,7 +175,10 @@
           </div>
 
           <div class="faire-copy ford-copy" id="ford-copy">
-            <span class="faire-eyebrow">02 // Ford — Android Automotive</span>
+            <div class="showcase-eyebrow-row">
+              <span class="faire-eyebrow">02 // Ford — Android Automotive</span>
+              <button type="button" class="showcase-close-btn" data-close-showcase aria-label="Close showcase and return to headline">← Intro</button>
+            </div>
             <p class="faire-desc">
               At <strong>Ford</strong>, I engineered <strong>CarPlay</strong> and <strong>Android Auto</strong> features for infotainment systems using <strong>Kotlin</strong>, <strong>Java</strong>, and <strong>RROs</strong>.
             </p>
@@ -196,7 +202,7 @@
         </div>
 
         <div class="index-list">
-          <div class="index-row is-current" id="faire-row" data-glyph="01">
+          <div class="index-row is-current has-showcase" id="faire-row" data-glyph="01" data-showcase="faire" tabindex="0" role="button" aria-expanded="false" aria-controls="faire-showcase">
             <div class="rule-h rule-top"></div>
             <div class="row-inner">
               <span class="index-num">01</span>
@@ -206,19 +212,25 @@
                 </span>
               </span>
               <span class="index-value">
-                <a href="https://www.faire.com" target="_blank" rel="noopener noreferrer" class="inline-link current-link">Faire ↗</a>
+                <span class="index-title-line">
+                  <a href="https://www.faire.com" target="_blank" rel="noopener noreferrer" class="inline-link current-link">Faire ↗</a>
+                  <span class="row-preview-badge" aria-hidden="true">[Preview]</span>
+                </span>
                 <span class="role-sub current-sub">iOS Engineering</span>
               </span>
             </div>
           </div>
 
-          <div class="index-row" id="ford-row" data-glyph="02">
+          <div class="index-row has-showcase" id="ford-row" data-glyph="02" data-showcase="ford" tabindex="0" role="button" aria-expanded="false" aria-controls="ford-showcase">
             <div class="rule-h rule-top"></div>
             <div class="row-inner">
               <span class="index-num">02</span>
               <span class="index-label">Previous</span>
               <span class="index-value">
-                <a href="https://www.ford.com" target="_blank" rel="noopener noreferrer" class="inline-link">Ford Motor Company ↗</a>
+                <span class="index-title-line">
+                  <a href="https://www.ford.com" target="_blank" rel="noopener noreferrer" class="inline-link">Ford Motor Company ↗</a>
+                  <span class="row-preview-badge" aria-hidden="true">[Preview]</span>
+                </span>
                 <span class="role-sub">Android Automotive Software Engineering</span>
               </span>
             </div>

@@ -121,12 +121,22 @@
     currentActiveId = targetId;
   }
 
+  const specimenBay = document.getElementById("specimen-bay");
+
   // Attach click and keyboard listeners to ledger rows
   ledgerRows.forEach((row) => {
     const target = row.getAttribute("data-target");
     if (!target) return;
 
-    row.addEventListener("click", () => switchExhibit(target));
+    row.addEventListener("click", () => {
+      switchExhibit(target);
+      if (specimenBay && window.matchMedia("(max-width: 1024px)").matches) {
+        const rect = specimenBay.getBoundingClientRect();
+        if (rect.top < 20 || rect.bottom > window.innerHeight) {
+          specimenBay.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      }
+    });
     row.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
@@ -134,9 +144,9 @@
       }
     });
 
-    // Optional hover preview on desktop devices
+    // Optional hover preview on desktop devices with fine pointer
     row.addEventListener("mouseenter", () => {
-      if (window.matchMedia("(min-width: 1025px)").matches) {
+      if (window.matchMedia("(min-width: 1025px) and (hover: hover) and (pointer: fine)").matches) {
         switchExhibit(target);
       }
     });
@@ -281,7 +291,7 @@
   // =========================================================================
   // 5. Custom Minimal Cursor Follower & Magnetic Physics
   // =========================================================================
-  if (cursorRing && cursorDot && window.matchMedia("(hover: hover)").matches) {
+  if (cursorRing && cursorDot && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let ringX = mouseX;

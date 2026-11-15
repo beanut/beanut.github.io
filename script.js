@@ -757,10 +757,50 @@
 
     let activeShowcase = null; // null | "faire" | "ford"
 
+    const heroPrimary = document.querySelector(".hero-primary");
+    const closeShowcaseBtns = document.querySelectorAll("[data-close-showcase]");
+    const canHover = () =>
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    function updateRowStates(active) {
+      [
+        { row: faireRow, key: "faire" },
+        { row: fordRow, key: "ford" },
+      ].forEach(({ row, key }) => {
+        if (!row) return;
+        const isActive = active === key;
+        row.classList.toggle("is-showcase-active", isActive);
+        row.setAttribute("aria-expanded", isActive ? "true" : "false");
+        const badge = row.querySelector(".row-preview-badge");
+        if (badge) {
+          badge.textContent = isActive ? "[Active]" : "[Preview]";
+        }
+      });
+    }
+
+    function updateBgGlyph(glyphText) {
+      if (!bgGlyph || bgGlyph.textContent === glyphText) return;
+      gsap.to(bgGlyph, {
+        y: -14,
+        opacity: 0,
+        duration: 0.18,
+        ease: "power2.in",
+        onComplete: () => {
+          bgGlyph.textContent = glyphText;
+          gsap.fromTo(
+            bgGlyph,
+            { y: 14, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }
+          );
+        },
+      });
+    }
+
     function setActiveShowcase(next) {
       if (activeShowcase === next || !heroTitleGroup) return;
       const prev = activeShowcase;
       activeShowcase = next;
+      updateRowStates(next);
 
       // Animate out previous showcase
       if (prev === "faire" && faireShowcase) {
@@ -857,11 +897,21 @@
       }
     }
 
+    closeShowcaseBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setActiveShowcase(null);
+        updateBgGlyph("BL");
+      });
+    });
+
     rows.forEach((row) => {
       const inner = row.querySelector(".row-inner");
       const glyphText = row.getAttribute("data-glyph") || "BL";
+      const showcaseKey = row.getAttribute("data-showcase");
 
       row.addEventListener("mouseenter", () => {
+        if (!canHover()) return;
         gsap.to(inner, {
           x: 12,
           duration: 0.4,
@@ -876,34 +926,49 @@
           setActiveShowcase(null);
         }
 
-        if (bgGlyph && bgGlyph.textContent !== glyphText) {
-          gsap.to(bgGlyph, {
-            y: -14,
-            opacity: 0,
-            duration: 0.18,
-            ease: "power2.in",
-            onComplete: () => {
-              bgGlyph.textContent = glyphText;
-              gsap.fromTo(
-                bgGlyph,
-                { y: 14, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }
-              );
-            },
-          });
-        }
+        updateBgGlyph(glyphText);
       });
 
       row.addEventListener("mouseleave", () => {
+        if (!canHover()) return;
         gsap.to(inner, {
           x: 0,
           duration: 0.45,
           ease: "power3.out",
         });
       });
+
+      if (showcaseKey) {
+        row.addEventListener("click", (e) => {
+          if (e.target.closest("a")) return;
+          const next = activeShowcase === showcaseKey ? null : showcaseKey;
+          setActiveShowcase(next);
+          updateBgGlyph(next ? glyphText : "BL");
+          if (next && !canHover() && heroPrimary) {
+            const rect = heroPrimary.getBoundingClientRect();
+            if (rect.top < 0) {
+              heroPrimary.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+          }
+        });
+
+        row.addEventListener("keydown", (e) => {
+          if (e.target.closest("a")) return;
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            const next = activeShowcase === showcaseKey ? null : showcaseKey;
+            setActiveShowcase(next);
+            updateBgGlyph(next ? glyphText : "BL");
+          } else if (e.key === "Escape" && activeShowcase) {
+            setActiveShowcase(null);
+            updateBgGlyph("BL");
+          }
+        });
+      }
     });
 
     faireRow?.addEventListener("mouseleave", (e) => {
+      if (!canHover()) return;
       const nextTarget = e.relatedTarget;
       if (
         (faireShowcase && nextTarget && faireShowcase.contains(nextTarget)) ||
@@ -915,6 +980,7 @@
     });
 
     faireShowcase?.addEventListener("mouseleave", (e) => {
+      if (!canHover()) return;
       const nextTarget = e.relatedTarget;
       if (
         (faireRow && nextTarget && faireRow.contains(nextTarget)) ||
@@ -926,6 +992,7 @@
     });
 
     fordRow?.addEventListener("mouseleave", (e) => {
+      if (!canHover()) return;
       const nextTarget = e.relatedTarget;
       if (
         (fordShowcase && nextTarget && fordShowcase.contains(nextTarget)) ||
@@ -937,6 +1004,7 @@
     });
 
     fordShowcase?.addEventListener("mouseleave", (e) => {
+      if (!canHover()) return;
       const nextTarget = e.relatedTarget;
       if (
         (fordRow && nextTarget && fordRow.contains(nextTarget)) ||
@@ -949,50 +1017,38 @@
 
     const indexList = document.querySelector(".index-list");
     indexList?.addEventListener("mouseleave", () => {
-      if (bgGlyph && bgGlyph.textContent !== "BL") {
-        gsap.to(bgGlyph, {
-          y: 12,
-          opacity: 0,
-          duration: 0.18,
-          ease: "power2.in",
-          onComplete: () => {
-            bgGlyph.textContent = "BL";
-            gsap.fromTo(
-              bgGlyph,
-              { y: -12, opacity: 0 },
-              { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }
-            );
-          },
-        });
-      }
+      if (!canHover()) return;
+      updateBgGlyph("BL");
     });
 
-    // 4. Magnetic Controls & Links
-    const magnetics = document.querySelectorAll(".magnetic");
-    magnetics.forEach((el) => {
-      const xTo = gsap.quickTo(el, "x", { duration: 0.4, ease: "power3" });
-      const yTo = gsap.quickTo(el, "y", { duration: 0.4, ease: "power3" });
+    // 4. Magnetic Controls & Links (Desktop Fine Pointer Only)
+    if (canHover()) {
+      const magnetics = document.querySelectorAll(".magnetic");
+      magnetics.forEach((el) => {
+        const xTo = gsap.quickTo(el, "x", { duration: 0.4, ease: "power3" });
+        const yTo = gsap.quickTo(el, "y", { duration: 0.4, ease: "power3" });
 
-      el.addEventListener("mousemove", (e) => {
-        const rect = el.getBoundingClientRect();
-        const dx = e.clientX - (rect.left + rect.width / 2);
-        const dy = e.clientY - (rect.top + rect.height / 2);
-        xTo(dx * 0.28);
-        yTo(dy * 0.35);
-      });
+        el.addEventListener("mousemove", (e) => {
+          const rect = el.getBoundingClientRect();
+          const dx = e.clientX - (rect.left + rect.width / 2);
+          const dy = e.clientY - (rect.top + rect.height / 2);
+          xTo(dx * 0.28);
+          yTo(dy * 0.35);
+        });
 
-      el.addEventListener("mouseleave", () => {
-        gsap.to(el, {
-          x: 0,
-          y: 0,
-          duration: 0.6,
-          ease: "elastic.out(1, 0.4)",
+        el.addEventListener("mouseleave", () => {
+          gsap.to(el, {
+            x: 0,
+            y: 0,
+            duration: 0.6,
+            ease: "elastic.out(1, 0.4)",
+          });
         });
       });
-    });
+    }
 
-    // 5. Custom Monochrome Cursor & Subtle Glyph Parallax
-    if (cursorRing && cursorDot) {
+    // 5. Custom Monochrome Cursor & Subtle Glyph Parallax (Desktop Fine Pointer Only)
+    if (cursorRing && cursorDot && canHover()) {
       const ringX = gsap.quickTo(cursorRing, "x", { duration: 0.28, ease: "power3" });
       const ringY = gsap.quickTo(cursorRing, "y", { duration: 0.28, ease: "power3" });
       const dotX = gsap.quickTo(cursorDot, "x", { duration: 0.06, ease: "none" });
